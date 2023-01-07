@@ -24,7 +24,7 @@ bash run.sh
 ### Generate covalent candidates without a co-crystal structure
 Prepare a PDBQT file for the receptor. This can be prepared by Meeko.
 see https://github.com/forlilab/Meeko.
-Then use [preprocess.py] for the docking process. 
+Then use [preprocess.py](https://github.com/Zhou-Yang/kincov/edit/main/preprocess.py) for the docking process. 
 
 ```bash
 python preprocess.py --smiles ${SMILES} --pdbqt ${PDBQT} --vinaconf $VINACONF --outdir ${OUTPUT}
