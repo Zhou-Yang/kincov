@@ -16,7 +16,7 @@ conda activate kincov
 
 ## Use
 ### Simple Usage
-To run kincov, just edit the configuration in [run.sh] and run the script
+To run kincov, just edit the configuration in [run.sh](https://github.com/Zhou-Yang/kincov/edit/main/run.sh) and run the script
 ```bash
 bash run.sh
 ```
