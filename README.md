@@ -5,6 +5,8 @@ KinCov allow for the automatic generation of candidates from an electrophilic wa
 * RDKit
 * Pymol
 * Meeko (optionally, for docking)
+* Amber (>=18)
+* GROMACS (>=2020.6)
 
 ## Installation
 Create a new conda environment:
@@ -31,6 +33,22 @@ python preprocess.py --smiles ${SMILES} --pdbqt ${PDBQT} --vinaconf $VINACONF --
 ```
 This will generate docking poses for the next step. 
 
+### Reactivity analysis of the candidate cysteines based on $pK_a$ values
+The $pK_a$ values of the kinase cysteines will be predicted by CpHMD simulations using the method as described in [[1]](#1). This calculation is time-consuming and is recommended to be performed on a cluster. 
+
+```bash
+python pka.py --pdb ${PDB} --site ${SITE_ID} --outdir ${OUTPUT}
+sbatch pka.sbatch 
+```
+
+### Accessibility of cysteines with high reactivity 
+The position of a cysteine and its distance to a reversible inhibitor will be sampled using replica exchange with solute scaling (REST2) [[2]](#2). This calculation is time-consuming and is recommended to be performed on a cluster. 
+
+```bash
+python ac.py --pdb ${PDB} --site ${SITE_ID} --outdir ${OUTPUT}
+sbatch ac.sbatch
+```
+
 ### Add EWFs and estimate proximity of the EWF to the cysteine
 The EWFs will be added automaticlly to the input reversible inhibitor
 $$d_{esti}=d_{site}-L_{EWF}$$
@@ -44,4 +62,7 @@ Covalent docking can be carried out directly for the candidate generated
 python covdock.py --smiles ${SMILES} --pdbqt ${OUTPUT}/${PDBQT} --site ${SITE_ID} --ligand ${OUTPUT}/ligand.pdb
 ```
 
+# References
+<a id="1">[1]</a> John Mongan, David A. Case, and J. Andrew McCammon, Constant pH molecular dynamics in generalized Born implicit solvent, J. Comput. Chem., 2004, 25 (16), 2038-2048. https://doi.org/10.1002/jcc.20139
 
+<a id="2">[2]</a> Lingle Wang, Richard A. Friesner, and B. J. Berne. Replica Exchange with Solute Scaling: A More Efficient Version of Replica Exchange with Solute Tempering (REST2). J. Phys. Chem. B, 2011, 115 (30), 9431–9438. https://doi.org/10.1021/jp204407d
