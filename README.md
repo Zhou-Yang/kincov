@@ -46,7 +46,7 @@ The position of a cysteine and its distance to a reversible inhibitor will be sa
 
 ```bash
 python ac.py --pdb ${PDB} --site ${SITE_ID} --outdir ${OUTPUT}
-sbatch ac.sbatch
+sbatch ac.sbatch 
 ```
 
 ### Add EWFs and estimate proximity of the EWF to the cysteine
